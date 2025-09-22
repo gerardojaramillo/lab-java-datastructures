@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.38'
+}
+
+repositories {
+    mavenCentral()
+}
