@@ -5,15 +5,16 @@
  * This example is using just a head node to handle all the operations, there is no tail no length for this implementation.
  * 
  * Operations: 
- * insertAtHead(T data) -> O(1)
- * insertAtTail(T data) -> O(n)
- * insertAt(int index, T data)
+ * insertAtHead(T data) -> O(1) 👍🏻
+ * insertAtTail(T data) -> O(n) 👍🏻
+ * insertAt(int index, T data) 👍🏻
  * deleteAt(int index)
  * deleteByValue(T data)
  * search(T data)
  * reverse()
- * length()
- * toString()
+ * length() 👍🏻
+ * toString() 👍🏻
+ * 
  */
 
 package datastructures;
@@ -64,6 +65,23 @@ public class SinglyLinkedList<T> {
         curr.next = newNode;
     }
 
+    /** insertAt(int index, T data) */
+    void insertAt(int index, T data) {
+        if (index < 0 || index > length() - 1)
+            throw new IndexOutOfBoundsException(index);
+        if (index == 0) {
+            insertAtHead(data);
+            return;
+        }
+        var curr = head;
+        for (int i = 0; i < index - 1; i++) {
+            curr = curr.next;
+        }
+        var newNode = new Node<T>(data);
+        newNode.next = curr.next;
+        curr.next = newNode;
+    }
+
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
@@ -95,13 +113,16 @@ public class SinglyLinkedList<T> {
     }
 
     public static void main(String[] args) {
-        var sll = new SinglyLinkedList<Integer>();
-        sll.insertAtTail(5);
-        sll.insertAtTail(6);
-        sll.insertAtTail(7);
-        sll.insertAtHead(3);
-        sll.insertAtHead(1);
-        sll.insertAtHead(9);
+        var sll = new SinglyLinkedList<Character>();
+        sll.insertAtTail('d');
+        sll.insertAtTail('e');
+        sll.insertAtTail('f');
+        sll.insertAtTail('g');
+        sll.insertAtHead('b');
+        sll.insertAtHead('a');
+        sll.insertAt(2, 'c');
+        sll.insertAt(0, '3');
+
         out.println(String.format("sll length: %d", sll.length()));
         out.println(sll.toString());
     }
