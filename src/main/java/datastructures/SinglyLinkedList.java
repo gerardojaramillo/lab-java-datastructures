@@ -10,8 +10,9 @@
  * insertAt(int index, T data) -> O(n) 👍🏻
  * deleteAt(int index) -> O(n) 👍🏻
  * deleteByValue(T data) -> O(n) 👍🏻
- * search(T data)
- * reverse()
+ * contains(T data) -> O(n) 👍🏻
+ * indexOf(T data) -> O(n) 👍🏻
+ * reverse() -> O(n) 👍🏻
  * length() 👍🏻
  * toString() 👍🏻
  * 
@@ -121,6 +122,45 @@ public class SinglyLinkedList<T> {
         }
     }
 
+    /** contains(T data) O(n) */
+    boolean contains(T data) {
+        var curr = head;
+        while (curr != null) {
+            if (curr.data == data) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** indexOf(T data) O(n) */
+    int indexOf(T data) {
+        int index = 0;
+        var curr = head;
+        while (curr != null) {
+            if (curr.data == data) {
+                return index;
+            }
+            curr = curr.next;
+            index++;
+        }
+        return -1;
+    }
+
+    /** reverse() time complexity O(n) space complexity O(1) */
+    void reverse() {
+        var prev = (Node<T>) null;
+        var curr = head;
+        var next = (Node<T>) null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
@@ -171,6 +211,8 @@ public class SinglyLinkedList<T> {
         sll.deleteByValue('g');
         out.println(sll.toString());
         sll.deleteByValue('d');
+        out.println(sll.toString());
+        sll.reverse();
         out.println(sll.toString());
 
         out.println(String.format("sll length: %d", sll.length()));
