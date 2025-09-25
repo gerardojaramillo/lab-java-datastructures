@@ -7,9 +7,9 @@
  * Operations: 
  * insertAtHead(T data) -> O(1) 👍🏻
  * insertAtTail(T data) -> O(n) 👍🏻
- * insertAt(int index, T data) 👍🏻
- * deleteAt(int index)
- * deleteByValue(T data)
+ * insertAt(int index, T data) -> O(n) 👍🏻
+ * deleteAt(int index) -> O(n) 👍🏻
+ * deleteByValue(T data) -> O(n) 👍🏻
  * search(T data)
  * reverse()
  * length() 👍🏻
@@ -33,7 +33,7 @@ public class SinglyLinkedList<T> {
         head = new Node<T>(data);
     }
 
-    /** length Big O o(n) */
+    /** length O(n) */
     int length() {
         int counter = 0;
         var temp = head;
@@ -44,14 +44,14 @@ public class SinglyLinkedList<T> {
         return counter;
     }
 
-    /** insertAtHead Big O o(1) */
+    /** insertAtHead O(1) */
     void insertAtHead(T data) {
         var newNode = new Node<T>(data);
         newNode.next = head;
         head = newNode;
     }
 
-    /** insertAtTail Big O o(n) */
+    /** insertAtTail O(n) */
     void insertAtTail(T data) {
         var newNode = new Node<T>(data);
         if (head == null) {
@@ -82,14 +82,55 @@ public class SinglyLinkedList<T> {
         curr.next = newNode;
     }
 
+    /** deleteAt(int index) O(n) */
+    void deleteAt(int index) {
+        if (index < 0 || index > length()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+        if (head == null) {
+            throw new IndexOutOfBoundsException("SinglyLinkedList is Empty");
+        }
+        if (index == 0) {
+            head = head.next;
+            return;
+        }
+        var curr = head;
+        /** Move forward to the previous node that we want to delete. */
+        for (int i = 0; i < index - 1; i++) {
+            curr = curr.next;
+        }
+        curr.next = curr.next.next;
+    }
+
+    /** deleteByValue(T data) O(n) */
+    void deleteByValue(T data) {
+        if (head == null) {
+            return;
+        }
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
+        var curr = head;
+        while (curr.next != null &&
+                curr.next.data != data) {
+            curr = curr.next;
+        }
+        if (curr.next != null) {
+            curr.next = curr.next.next;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
+        b.append("SinglyLinkedList: [");
         var curr = head;
         while (curr != null) {
             b.append(curr);
             curr = curr.next;
         }
+        b.append(']');
         return b.toString();
     }
 
@@ -122,9 +163,17 @@ public class SinglyLinkedList<T> {
         sll.insertAtHead('a');
         sll.insertAt(2, 'c');
         sll.insertAt(0, '3');
+        out.println(sll.toString());
+        sll.deleteAt(0);
+        out.println(sll.toString());
+        sll.deleteAt(2);
+        out.println(sll.toString());
+        sll.deleteByValue('g');
+        out.println(sll.toString());
+        sll.deleteByValue('d');
+        out.println(sll.toString());
 
         out.println(String.format("sll length: %d", sll.length()));
-        out.println(sll.toString());
     }
 
 }
